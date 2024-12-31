@@ -1,13 +1,16 @@
-import type { NextAuthConfig } from "next-auth"
-import Credentials from "next-auth/providers/credentials"
+import NextAuth from "next-auth"
+import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "./schema/user"
 import db from "./db";
 import bcrypt from "bcryptjs"
  
-// Notice this is only an object, not a full Auth.js instance
 export default {
   providers: [
     Credentials({
+            credentials: {
+        email: {},
+        password: {},
+      },
         async authorize(credentials){
             console.log("Hello1")
             const validatedFields = LoginSchema.safeParse(credentials);
@@ -18,15 +21,22 @@ export default {
                     where:{email}
                 })
                 if(!existingUser || !existingUser.password)return null
-                const PasswordMatch =  await bcrypt.compare(existingUser.password,password)
+                const PasswordMatch =  await bcrypt.compare(password,existingUser.password)
                 console.log("Hello2")
 
                 console.log(existingUser)
 
-                if(PasswordMatch)return existingUser
+                if(PasswordMatch){
+                  return {
+                    id: existingUser.id,
+                    email: existingUser.email,
+                    username: existingUser.username,
+                    image: existingUser.image,
+                  };
+                }
             }
             return null
         }
     })
   ],
-} satisfies NextAuthConfig
+}

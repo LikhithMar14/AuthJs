@@ -6,8 +6,7 @@
   import { zodResolver } from "@hookform/resolvers/zod";
   import { LoginSchema } from "@/schema/user";
   import { useSearchParams } from "next/navigation";
-  import axios from "axios";
-
+  import { Login } from "@/actions/user/login"
   import {
     Form,
     FormControl,
@@ -45,31 +44,24 @@
       },
     });
 
-    const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
       setError("");
       setSuccess("");
-    
-      startTransition(async () => {
-        try {
-          const response = await axios.post("/api/auth/login", values);
-          const data = response.data;
-    
-          if (response.status !== 200) {
-            setError(data?.error || "Something went wrong");
-            form.reset();
-          } else {
-            alert("Sucess")
-            setSuccess(data?.success || "Login successful!");
-            form.reset();
-    
-            if (callbackUrl) {
-              window.location.href = callbackUrl;
+
+      startTransition(() => {
+        Login(values)
+          .then((data) => {
+            if (data?.error) {
+              form.reset();
+              setError(data.error);
             }
-          }
-        } catch (error) {
-          setError("Something went wrong during login.");
-          form.reset();
-        }
+
+            if (data?.success) {
+              form.reset();
+              setError(data.success);
+            }
+          })
+          .catch(() => setError("Something went wrong"));
       });
     };
 
