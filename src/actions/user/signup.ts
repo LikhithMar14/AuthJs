@@ -10,6 +10,7 @@ export const signup = async(values:z.infer<typeof SignupSchema>) => {
     if(!validatedFields.success){
         return {error : "Invalid Fields"}
     }
+    
     const {email, password, username} = validatedFields.data;
 
     const hashedPassword  = await bcrypt.hash(password,10)
