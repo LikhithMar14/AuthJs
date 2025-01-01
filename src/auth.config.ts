@@ -17,7 +17,7 @@ export default {
             if(validatedFields.success){
                 const {email,password} = validatedFields.data;
 
-                const existingUser = await db.user.findFirst({
+                const existingUser = await db.user.findUnique({
                     where:{email}
                 })
                 if(!existingUser || !existingUser.password)return null
@@ -27,12 +27,7 @@ export default {
                 console.log(existingUser)
 
                 if(PasswordMatch){
-                  return {
-                    id: existingUser.id,
-                    email: existingUser.email,
-                    username: existingUser.username,
-                    image: existingUser.image,
-                  };
+                  return existingUser
                 }
             }
             return null
