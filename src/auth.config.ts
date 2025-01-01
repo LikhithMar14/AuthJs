@@ -1,11 +1,13 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials";
+import Github   from  "next-auth/providers/github"
+import Google   from   "next-auth/providers/google"
 import { LoginSchema } from "./schema/user"
 import db from "./db";
 import bcrypt from "bcryptjs"
  
 export default {
-  providers: [
+  providers: [Google,Github,
     Credentials({
             credentials: {
         email: {},

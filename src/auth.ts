@@ -9,7 +9,13 @@ import { Role } from "@prisma/client"
  
 export const { handlers, auth, signIn, signOut } = NextAuth({
 
+  pages:{
+    signIn:"/login",
+    
+  },
+
   callbacks:{
+
       async session({ token , session}){
 
         return session

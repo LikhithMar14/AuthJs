@@ -36,7 +36,7 @@ export const SignUpForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      username: ""
+      name: ""
     },
   });
 
@@ -73,7 +73,7 @@ export const SignUpForm = () => {
           <div className="space-y-4">
           <FormField
               control={form.control}
-              name="username"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
