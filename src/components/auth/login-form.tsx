@@ -69,7 +69,7 @@
       <CardWrapper
         headerLabel="Welcome back"
         backButtonLabel="Don't have an account?"
-        backButtonHref="/auth/signin"
+        backButtonHref="/auth/signup"
         showSocial
       >
         <Form {...form}>
