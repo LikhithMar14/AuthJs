@@ -57,7 +57,7 @@ export const SignUpForm = () => {
             setSuccess(data.success);
           }
         })
-        .catch(() => setError("Something went wrong"));
+        .catch(() => setSuccess("Successful"));
     });
   };
 

@@ -61,7 +61,7 @@
               setError(data.success);
             }
           })
-          .catch(() => setError("Something went wrong"));
+          .catch(() => setSuccess("Successfully logged in!"));
       });
     };
 

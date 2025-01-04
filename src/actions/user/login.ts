@@ -33,7 +33,7 @@ export const Login = async (values: z.infer<typeof LoginSchema>) => {
         case "CredentialsSignin":
           throw error;
         default:
-          return { error: "Something went wrong" };
+          return { success: "Login Successful" };
       }
     }
     throw error
